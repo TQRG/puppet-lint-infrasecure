@@ -1,7 +1,5 @@
-module AwesomeGem
-  class WhoIs
-    def self.awesome?
-      puts "YOU ARE AWESOME!!"
-    end
+class PuppetSecLinter
+  def self.hi
+    puts "Hello world!"
   end
 end
