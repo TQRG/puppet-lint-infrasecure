@@ -1,7 +1,5 @@
-require File.expand_path('lib/puppet_sec_linter/version', __dir__)
-
 Gem::Specification.new do |s|
-  s.name = 'puppet_sec_linter'
+  s.name = 'puppet-security-linter'
   s.version = "0.0.0"
   s.authors = ["Sofia Reis", "Rui Abreu"]
   s.summary = 'Security Linter for Puppet'
@@ -12,12 +10,16 @@ Gem::Specification.new do |s|
   s.files = Dir[
     'README.md', 
     'puppet_sec_linter.gemspec', 
-    'lib/puppet_sec_linter.rb',
-    'lib/**/**.rb',
+    'lib/**/*',
+    'test/**/*',
     'LICENSE',
     'Gemfile'
   ]
-  s.require_paths = ["lib"]
+  s.test_files  = Dir['test/**/*']
+  s.summary     = 'A puppet linter to detect security code smells.'
+  s.description = <<-EOF
+    Checks puppet manifests for potential security issues.
+  EOF
 
   s.add_dependency             'puppet-lint', '~> 2.0'
 end
