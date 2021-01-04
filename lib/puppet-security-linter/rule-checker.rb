@@ -1,3 +1,0 @@
-class PuppetLinter::RuleChecker
-    
-end
