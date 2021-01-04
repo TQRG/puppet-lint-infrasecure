@@ -1,25 +1,27 @@
-Gem::Specification.new do |s|
-  s.name = 'puppet-security-linter'
-  s.version = "0.0.0"
-  s.authors = ["Sofia Reis", "Rui Abreu"]
-  s.summary = 'Security Linter for Puppet'
-  s.homepage = 'https://github.com/TQRG/puppet-security-linter'
-  s.platform = Gem::Platform::RUBY
-  s.required_ruby_version = '>= 2.5.0'
-  s.license = 'MIT'
-  s.files = Dir[
+Gem::Specification.new do |spec|
+  spec.name = 'puppet-security-linter'
+  spec.version = '1.0.0'
+  spec.authors = 'SOR, RMA'
+  spec.homepage = 'https://github.com/TQRG/puppet-security-linter'
+  spec.license = 'MIT'
+  spec.files = Dir[
     'README.md', 
-    'puppet_sec_linter.gemspec', 
+    'puppet_security_linter.gemspec', 
     'lib/**/*',
     'test/**/*',
     'LICENSE',
     'Gemfile'
   ]
-  s.test_files  = Dir['test/**/*']
-  s.summary     = 'A puppet linter to detect security code smells.'
-  s.description = <<-EOF
+  spec.test_files  = Dir['test/**/*']
+  spec.summary = 'A puppet-lint plugin to check for security code smells in IaC.'
+  spec.description = <<-EOF
     Checks puppet manifests for potential security issues.
   EOF
 
-  s.add_dependency             'puppet-lint', '~> 2.0'
+  spec.add_dependency             'puppet-lint', '~> 2.0'
+  spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'rspec-its', '~> 1.0'
+  spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
+  spec.add_development_dependency 'rake'
+
 end
