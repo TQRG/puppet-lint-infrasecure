@@ -1,5 +1,3 @@
-require 'puppet-security-linter'
-
 PuppetLint.new_check(:admin_by_default) do
     def check
       tokens.each do |indi_token|

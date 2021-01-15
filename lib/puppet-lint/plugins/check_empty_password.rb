@@ -1,5 +1,3 @@
-require 'puppet-security-linter'
-
 PuppetLint.new_check(:empty_password) do
     def check
       tokens.each do |indi_token|

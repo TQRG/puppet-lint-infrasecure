@@ -1,5 +1,3 @@
-require 'puppet-security-linter'
-
 PuppetLint.new_check(:invalid_ip_addr_binding) do
     def check
       tokens.each do |indi_token|

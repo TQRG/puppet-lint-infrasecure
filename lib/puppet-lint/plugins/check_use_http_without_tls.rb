@@ -1,5 +1,3 @@
-require 'puppet-security-linter'
-
 PuppetLint.new_check(:use_http_without_tls) do
    def check
       tokens.each do |indi_token|

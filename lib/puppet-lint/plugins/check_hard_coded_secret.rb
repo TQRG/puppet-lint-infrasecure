@@ -1,5 +1,3 @@
-require 'puppet-security-linter'
-
 PuppetLint.new_check(:hardcode_secret) do
    def check
       invalid_kw_list = ['(', 'undef', 'true', 'false', 'hiera', 'secret', 'union',

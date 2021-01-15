@@ -1,5 +1,3 @@
-require 'puppet-security-linter'
-
 PuppetLint.new_check(:susp_comments) do
    def check
       ##for comments we need to grab all lines
