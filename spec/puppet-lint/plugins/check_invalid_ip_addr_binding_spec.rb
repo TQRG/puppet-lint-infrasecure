@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe 'invalid_ip_addr_binding' do
     let(:msg) { 'SECURITY:::BINDING_TO_ALL:::Do not bind to 0.0.0.0. This may cause a DDOS attack. Restrict your available IPs.' }
-  
-    context 'invalid ip adress binding configuration' do
-        let(:code) { "
+    
+    context 'with fix disabled' do
+        context 'invalid ip adress binding configuration' do
+            let(:code) { "
     class centos_cloud::controller::nova (
         $allowed_hosts     = '172.22.6.%',
         $bind_host         = '0.0.0.0',
@@ -28,12 +29,13 @@ describe 'invalid_ip_addr_binding' do
     }
     " }
   
-        it 'should detect a single problem' do
-            expect(problems).to have(1).problem
-        end
+            it 'should detect a single problem' do
+                expect(problems).to have(1).problem
+            end
   
-        it 'should create a warning' do
-            expect(problems).to contain_warning(msg).on_line(4).in_column(30)
+            it 'should create a warning' do
+                expect(problems).to contain_warning(msg).on_line(4).in_column(30)
+            end
         end
     end
 end

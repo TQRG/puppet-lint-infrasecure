@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe 'suspicious_comment' do
     let(:msg) { 'SECURITY:::SUSPICOUS_COMMENTS:::Do not expose sensitive information@# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538392@' }
-  
-    context 'code with suspicious comment' do
-        let(:code) { "
+    
+    context 'with fix disabled' do
+        context 'code with suspicious comment' do
+            let(:code) { "
     if $::realm == 'labs' {
         # The 'ssh-key-ldap-lookup' tool is called during login ssh via AuthorizedKeysCommand.  It
         #  returns public keys from ldap for the specified username.
@@ -37,12 +38,13 @@ describe 'suspicious_comment' do
     }
     " }
   
-        it 'should detect a single problem' do
-            expect(problems).to have(1).problem
-        end
+            it 'should detect a single problem' do
+                expect(problems).to have(1).problem
+            end
   
-        it 'should create a warning' do
-            expect(problems).to contain_warning(msg).on_line(8).in_column(5)
+            it 'should create a warning' do
+                expect(problems).to contain_warning(msg).on_line(8).in_column(5)
+            end
         end
     end
 end

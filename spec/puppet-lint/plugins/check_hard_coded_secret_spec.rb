@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe 'hardcode_secret' do
     let(:msg) { 'SECURITY:::HARD_CODED_SECRET_V1:::Do not hard code secrets. This may help an attacker to attack the system. You can use hiera to avoid this issue.@username=apmirror@' }
-  
-    context 'code contains hard coded usernames' do
-        let(:code) { "
+    
+    context 'with fix disabled' do
+        context 'code contains hard coded usernames' do
+            let(:code) { "
     class apmirror (
         $uid            = 508,
         $gid            = 508,
@@ -34,12 +35,13 @@ describe 'hardcode_secret' do
     }
     " }
   
-        it 'should detect one problem' do
-            expect(problems).to have(1).problem
-        end
+            it 'should detect one problem' do
+                expect(problems).to have(1).problem
+            end
   
-        it 'should create a warning for username hard coded config' do
-            expect(problems).to contain_warning(msg).on_line(10).in_column(9)
+            it 'should create a warning for username hard coded config' do
+                expect(problems).to contain_warning(msg).on_line(10).in_column(9)
+            end
         end
     end
 end

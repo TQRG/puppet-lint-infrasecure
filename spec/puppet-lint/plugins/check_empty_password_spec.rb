@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe 'empty_password' do
     let(:msg) { 'SECURITY:::EMPTY_PASSWORD:::Do not keep password field empty. This may help an attacker to attack. You can use hiera to avoid this issue.@pass=@' }
-  
-    context 'code configuration using empty passwords' do
-        let(:code) { "
+    
+    context 'with fix disabled' do
+        context 'code configuration using empty passwords' do
+            let(:code) { "
     define znc::user (
         $ensure          = 'present',
         $realname        = undef,
@@ -37,12 +38,13 @@ describe 'empty_password' do
     }      
     " }
   
-        it 'should detect one problem' do
-            expect(problems).to have(1).problem
-        end
+            it 'should detect one problem' do
+                expect(problems).to have(1).problem
+            end
   
-        it 'should create a warning for svnwc user config' do
-            expect(problems).to contain_warning(msg).on_line(12).in_column(9)
+            it 'should create a warning for svnwc user config' do
+                expect(problems).to contain_warning(msg).on_line(12).in_column(9)
+            end
         end
     end
 end

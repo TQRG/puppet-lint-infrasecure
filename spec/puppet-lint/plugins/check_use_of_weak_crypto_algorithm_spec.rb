@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe 'use_of_weak_crypto_algorithm' do
     let(:msg) { 'SECURITY:::MD5:::Do not use MD5 or SHA1, as they have security weakness. Use SHA-512.@sha1@' }
-  
-    context 'code using unsecure algorithms' do
-        let(:code) { "
+    
+    context 'with fix disabled' do
+        context 'code using unsecure algorithms' do
+            let(:code) { "
     define tomcat::instance (
         $catalina_home          = undef,
         $catalina_base          = undef,
@@ -28,12 +29,13 @@ describe 'use_of_weak_crypto_algorithm' do
     }
     " }
   
-        it 'should detect a single problem' do
-            expect(problems).to have(1).problem
-        end
+            it 'should detect a single problem' do
+                expect(problems).to have(1).problem
+            end
   
-        it 'should create a warning' do
-            expect(problems).to contain_warning(msg).on_line(21).in_column(21)
+            it 'should create a warning' do
+                expect(problems).to contain_warning(msg).on_line(21).in_column(21)
+            end
         end
     end
 end
