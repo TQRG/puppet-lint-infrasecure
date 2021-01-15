@@ -2,6 +2,12 @@
 
 This linter identifies 7 security code smells in infrasctruture as code scripts implemented in Puppet. 
 
+### Install Gems
+
+```
+bundle install
+```
+
 ### Run Tests
 
 ```
