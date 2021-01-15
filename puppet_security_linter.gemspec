@@ -1,7 +1,8 @@
 Gem::Specification.new do |spec|
   spec.name = 'puppet-security-linter'
   spec.version = '1.0.0'
-  spec.authors = 'SOR, RMA'
+  spec.author = 'Sofia Reis'
+  spec.email = 'sofia.o.reis@tecnico.ulisboa.pt'
   spec.homepage = 'https://github.com/TQRG/puppet-security-linter'
   spec.license = 'MIT'
   spec.files = Dir[
@@ -19,7 +20,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-its', '~> 1.0'
   spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
-  spec.add_development_dependency 'did_you_mean'
-  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rake', '~> 13.0'
 
 end
