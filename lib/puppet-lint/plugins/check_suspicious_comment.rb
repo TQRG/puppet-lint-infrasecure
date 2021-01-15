@@ -1,4 +1,4 @@
-PuppetLint.new_check(:susp_comments) do
+PuppetLint.new_check(:suspicious_comment) do
    def check
       ##for comments we need to grab all lines
       lineNo=0
