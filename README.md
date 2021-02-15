@@ -20,11 +20,12 @@ bundle exec rake
 gem build puppet_security_linter.gemspec
 ```
 
-### Installation
+### Installation 
 
 ```
-sudo gem install ./puppet-security-linter-1.0.0.gem
+sudo gem install ./puppet-security-linter-V.0.0.gem
 ```
+where v is the version. version = {1,2}
 
 ### Run Example
 
