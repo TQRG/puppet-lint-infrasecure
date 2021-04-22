@@ -26,6 +26,12 @@ describe 'invalid_ip_addr_binding' do
             provider => 'rabbitmqctl',
             require  => Class['::rabbitmq']
         }
+
+        if $bind_ip == '0.0.0.0' {
+            $bind_ip_real = '127.0.0.1'
+          } else {
+            $bind_ip_real = $bind_ip
+          }        
     }
     " }
   
