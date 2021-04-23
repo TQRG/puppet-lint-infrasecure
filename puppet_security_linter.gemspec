@@ -1,5 +1,5 @@
 Gem::Specification.new do |spec|
-  spec.name = 'puppet-security-linter'
+  spec.name = 'puppet-lint-iac-security-checks'
   spec.version = '2.0.0'
   spec.author = 'Sofia Reis'
   spec.email = 'sofia.o.reis@tecnico.ulisboa.pt'
@@ -16,11 +16,10 @@ Gem::Specification.new do |spec|
     Checks puppet manifests for potential security issues.
   EOF
 
-  spec.add_dependency             'puppet-lint', '~> 1.1'
+  spec.add_dependency             'puppet-lint', '>= 2.1', '< 3.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-its', '~> 1.0'
   spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
-  spec.add_development_dependency 'rake', '~> 13.0'
-
-
+  spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.3'
+  spec.add_development_dependency 'coveralls', '~> 0.7'
 end
