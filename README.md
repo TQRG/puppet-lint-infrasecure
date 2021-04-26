@@ -1,5 +1,7 @@
 # puppet-security-linter
 
+⚠️ This is still working in progress!
+
 This linter identifies 9 security vulnerabilities in Puppet scripts. 
 
 - Admin By Default Credentials
@@ -10,7 +12,7 @@ This linter identifies 9 security vulnerabilities in Puppet scripts.
 - Usage of Weak Crypto Algorithms (e.g., sha1 and md5)
 - Suspicious Comments
 - Malicious Dependencies
-- Phishing Attacks
+- Apple Phishing Attack
 
 ### Configure gem
 
@@ -26,7 +28,7 @@ Add whitelist path to .env file.
 WHITELIST=~/path/to/whitelist
 ```
 
-# Create whitelist file
+### Create whitelist file
 
 A whitelist by default is provided. You can build your own if you want by following this structure:
 
