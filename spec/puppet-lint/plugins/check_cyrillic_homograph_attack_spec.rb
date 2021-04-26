@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe 'apple_phishing_attack' do
-    let(:msg) {'[SECURITY] Phishing Attack (line=2, col=35). This link (https://www.аpple.com/phish) has a cyrillic char. These are not rendered by browsers and are sometimes used in homograph attacks.' }
+describe 'cyrillic_homograph_attack' do
+    let(:msg) {'[SECURITY] Homograph Attack (line=2, col=35). This link (https://www.аpple.com/phish) has a cyrillic char. These are not rendered by browsers and are sometimes used for phishing attacks.' }
     
     context 'with fix disabled' do
-        context 'using cyrillic chars not accepted by normal browsers' do
+        context 'homograph attack using cyrillic chars not rendered by normal browsers' do
             let(:code) { "
                 $apple_phishing = 'https://www.аpple.com/phish'
                 $apple_ok = 'https://www.apple.com/ok'
