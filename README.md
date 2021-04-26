@@ -12,7 +12,7 @@ This linter identifies 9 security vulnerabilities in Puppet scripts.
 - Usage of Weak Crypto Algorithms (e.g., sha1 and md5)
 - Suspicious Comments
 - Malicious Dependencies
-- Apple Phishing Attack
+- Homograph Attacks (e.g., [Apple](https://www.xudongz.com/blog/2017/idn-phishing/))
 
 ### Install Gems
 
