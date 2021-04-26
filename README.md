@@ -1,6 +1,6 @@
 # puppet-security-linter
 
-⚠️ This is still working in progress!
+⚠️  This is still work in progress!
 
 This linter identifies 9 security vulnerabilities in Puppet scripts. 
 
