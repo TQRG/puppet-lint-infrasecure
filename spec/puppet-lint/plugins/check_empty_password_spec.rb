@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'empty_password' do
-    let(:msg) { 'SECURITY:::EMPTY_PASSWORD:::Do not keep password field empty. This may help an attacker to attack. You can use hiera to avoid this issue.@pass=@' }
+    let(:msg) { '[SECURITY] Empty Password (line=12, col=32) | Do not keep the password field empty as for $password in line 12. Use kms/heira/vault instead.' }
     
     context 'with fix disabled' do
         context 'code configuration using empty passwords' do
@@ -16,7 +16,7 @@ describe 'empty_password' do
         $port            = 6667,
         $ssl             = false,
         $quitmsg         = 'quit',
-        $pass            = '',
+        $password            = '',
         $channels        = undef,
         $network         = undef,
         $maxnetworks     = 1,
@@ -31,7 +31,12 @@ describe 'empty_password' do
             group => $::znc::params::zc_group,
             mode  => '0600',
         }
-          
+        
+
+        $real_htpasswd_file = $htpasswd_file ? {
+            ''      => '${apache::params::config_dir}/htpasswd'
+}
+
         Exec {
             path => '/bin:/sbin:/usr/bin:/usr/sbin', 
         }
@@ -43,7 +48,7 @@ describe 'empty_password' do
             end
   
             it 'should create a warning for svnwc user config' do
-                expect(problems).to contain_warning(msg).on_line(12).in_column(9)
+                expect(problems).to contain_warning(msg).on_line(12).in_column(32)
             end
         end
     end

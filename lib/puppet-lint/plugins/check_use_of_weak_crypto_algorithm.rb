@@ -1,4 +1,4 @@
-require 'puppet-lint-security'
+require 'puppet-security-linter'
 
 PuppetLint.new_check(:use_of_weak_crypto_algorithm) do
 

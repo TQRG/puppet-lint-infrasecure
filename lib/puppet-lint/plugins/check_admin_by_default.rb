@@ -1,35 +1,24 @@
+require 'puppet-security-linter'
+
 PuppetLint.new_check(:admin_by_default) do
+
+    CREDENTIALS = /user|usr|pass(word|_|$)|pwd/
+
     def check
-      tokens.each do |indi_token|
-         nxt_token     = indi_token.next_code_token # next token which is not a white space
-         if (!nxt_token.nil?) && (!indi_token.nil?)
-            token_type   = indi_token.type.to_s ### this gives type for current token
-
-            nxt_nxt_token =  nxt_token.next_code_token # get the next next token to get key value pair
-
-            if  (!nxt_nxt_token.nil?)
-               token_line      = indi_token.line ### this gives type for current token
-               nxt_tok_line    = nxt_token.line
-               nxt_nxt_tok_lin = nxt_nxt_token.line
-               if (token_type.eql? 'NAME') || (token_type.eql? 'VARIABLE') || (token_type.eql? 'SSTRING')
-                  nxt_typ = nxt_token.type.to_s
-                  nxt_nxt_typ=nxt_nxt_token.type.to_s
-                  if (token_line==nxt_tok_line) && (token_line==nxt_nxt_tok_lin)
-                     if (token_type.eql? 'VARIABLE') && (nxt_typ.eql? 'EQUALS') && (nxt_nxt_typ.eql? 'SSTRING')
-                          # puts "ONE,TWO,THREE----->#{token_type}, #{nxt_typ}, #{nxt_nxt_typ}"
-                          nxt_nxt_val = nxt_nxt_token.value.downcase
-                          token_val   = indi_token.value.downcase
-                          if ((nxt_nxt_val.include? 'admin') && (token_val.include? 'user')) ||
-                             ((token_val.include? 'admin') && (token_val.include? 'user'))
-                             notify :warning, {
-                               message: 'SECURITY:::ADMIN_BY_DEFAULT:::Do not make default user as admin. This violates the secure by design principle.@'+token_val+'='+nxt_nxt_val+'@',
-                               line:    indi_token.line,
-                               column:  indi_token.column,
-                               token:   token_val
-                             }
-                           end
-                     end
-                  end
+        ftokens = get_string_tokens(tokens,'admin')
+        ftokens.each do |token|
+         token_value = token.value.downcase
+         token_type = token.type.to_s
+         if ["EQUALS", "FARROW"].include? token.prev_code_token.type.to_s 
+            prev_token = token.prev_code_token
+            if prev_token.prev_code_token.value.downcase =~ CREDENTIALS and prev_token.prev_code_token.type.to_s == 'VARIABLE'
+               if token_value == 'admin'
+                  notify :warning, {
+               message: "[SECURITY] Admin by default (line=#{token.line}, col=#{token.column}) | Do not make user/password as admin as for $#{prev_token.prev_code_token.value.downcase} in line #{token.line}. This can be easily exploited.",
+               line:    token.line,
+               column:  token.column,
+               token:   token_value
+            }
                end
             end
          end
