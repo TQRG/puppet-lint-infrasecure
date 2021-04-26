@@ -1,27 +1,21 @@
+require 'puppet-security-linter'
+
 PuppetLint.new_check(:suspicious_comment) do
+
+   SUSPICIOUS = /hack|fixme|ticket|bug|secur|debug|defect|function|weak/
+
    def check
-      ##for comments we need to grab all lines
-      lineNo=0
-      manifest_lines.each do |single_line|
-         lineNo += 1
-         ##first check if string starts with #, which is comemnt in Puppet
-         if single_line.include? '#'
-            ### check if those keywords exist
-            single_line=single_line.downcase
-            single_line=single_line.strip
-            # (single_line.include?('show_bug') || removing show_bug, as it generates duplicates
-            if  (( single_line.include?('hack') ||
-                  single_line.include?('fixme')    || single_line.include?('later') ||
-                  single_line.include?('later2')   || single_line.include?('todo') ||
-                  single_line.include?('ticket')   || single_line.include?('launchpad') ||
-                  single_line.include?('bug') || single_line.include?('to-do')) && (!single_line.include?('debug'))
-                  )
-                  notify :warning, {
-                     message: 'SECURITY:::SUSPICOUS_COMMENTS:::Do not expose sensitive information@' + single_line+'@',
-                     line: lineNo,
-                     column:   5   #no columsn for comment lines so assignning a dummy one to keep puppet-lint happy
-                  }
-            end
+      ftokens = get_comments(tokens)
+      ftokens.each do |token|
+         token_value = token.value.downcase
+         token_type = token.type.to_s
+         if (token_value =~ SUSPICIOUS)
+            notify :warning, {
+               message: "[SECURITY] Suspicious Comment (line=#{token.line}, col=#{token.column}) | Avoid doing comments containing info about a defect, missing functionality or weakness of the system.",
+               line: token.line,
+               column: token.column,
+               token: token_value
+            }
          end
       end
    end
