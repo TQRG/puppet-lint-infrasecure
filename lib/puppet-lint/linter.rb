@@ -7,6 +7,13 @@ class PuppetLint::CheckPlugin
       return ftokens
    end
 
+   def get_comments(tokens)
+      ftokens=tokens.find_all do |hash|
+         (hash.type.to_s == 'COMMENT' || hash.type.to_s == 'MLCOMMENT' || hash.type.to_s == 'SLASH_COMMENT') 
+      end
+      return ftokens
+   end
+
    def filter_resources(tokens, resources)
       is_resource = false  
       brackets = 0
