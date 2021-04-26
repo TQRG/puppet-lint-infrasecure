@@ -35,7 +35,7 @@ gem build puppet_lint_security_iac.gemspec
 ### Installation 
 
 ```
-gem install ./puppet-lint-security-iac-2.0.0.gem
+gem install ./puppet-lint-security-iac-1.0.0.gem
 ```
 
 ### Configure gem

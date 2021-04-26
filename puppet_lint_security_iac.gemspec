@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = 'puppet-lint-security-iac'
-  spec.version = '2.0.0'
+  spec.version = '1.0.0'
   spec.author = 'Sofia Reis'
   spec.email = 'sofia.o.reis@tecnico.ulisboa.pt'
   spec.homepage = 'https://github.com/TQRG/puppet-lint-security-iac'
