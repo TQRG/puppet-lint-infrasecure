@@ -1,4 +1,4 @@
-# puppet-security-linter
+# puppet-lint-security-iac
 
 ⚠️  This is still work in progress!
 
