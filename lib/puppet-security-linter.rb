@@ -1,7 +1,6 @@
 require 'puppet-lint'
 require 'puppet-lint/linter'
 require 'puppet-lint/config'
-require 'puppet-lint/sarif'
 require 'dotenv/load'
 
 Dotenv.load('.env')
