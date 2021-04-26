@@ -48,12 +48,12 @@ bundle exec rake
 ### Build Gem
 
 ```
-gem build puppet_security_linter.gemspec
+gem build puppet_lint_security_iac.gemspec
 ```
 
 ### Installation 
 
 ```
-gem install ./puppet-security-linter-2.0.0.gem
+gem install ./puppet-lint-security-iac-2.0.0.gem
 ```
 
