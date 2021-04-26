@@ -14,6 +14,30 @@ This linter identifies 9 security vulnerabilities in Puppet scripts.
 - Malicious Dependencies
 - Apple Phishing Attack
 
+### Install Gems
+
+```
+bundle install
+```
+
+### Run Tests
+
+```
+bundle exec rake
+```
+
+### Build Gem
+
+```
+gem build puppet_lint_security_iac.gemspec
+```
+
+### Installation 
+
+```
+gem install ./puppet-lint-security-iac-2.0.0.gem
+```
+
 ### Configure gem
 
 Create .env file.
@@ -44,28 +68,3 @@ http://apt.postgresql.org/.*
 http://packages.vmware.com
 http://.*.jenkins-ci.org/.*
 ```
-
-### Install Gems
-
-```
-bundle install
-```
-
-### Run Tests
-
-```
-bundle exec rake
-```
-
-### Build Gem
-
-```
-gem build puppet_lint_security_iac.gemspec
-```
-
-### Installation 
-
-```
-gem install ./puppet-lint-security-iac-2.0.0.gem
-```
-
