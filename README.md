@@ -1,6 +1,16 @@
 # puppet-security-linter
 
-This linter identifies 7 security vulnerabilities in puppet scripts. 
+This linter identifies 9 security vulnerabilities in Puppet scripts. 
+
+- Admin By Default Credentials
+- Empty Passwords
+- Hard-Coded Secrets (password, user, keys)
+- Invalid IP Address Binding
+- Use of HTTP without TLS
+- Usage of Weak Crypto Algorithms (e.g., sha1 and md5)
+- Suspicious Comments
+- Malicious Dependencies
+- Phishing Attacks
 
 ### Configure gem
 
