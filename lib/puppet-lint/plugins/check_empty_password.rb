@@ -6,7 +6,6 @@ PuppetLint.new_check(:empty_password) do
 
    def check
       ftokens = get_string_tokens(tokens,'')
-      password = false
       ftokens.each do |token|
          token_value = token.value.downcase
          token_type = token.type.to_s
