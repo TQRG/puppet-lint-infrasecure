@@ -2,7 +2,7 @@
 
 ⚠️  This is still work in progress!
 
-This linter identifies 9 security vulnerabilities in Puppet scripts. 
+This linter identifies 8 security vulnerabilities in Puppet scripts. 
 
 - Admin By Default Credentials
 - Empty Passwords
