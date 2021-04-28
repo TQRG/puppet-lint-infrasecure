@@ -7,6 +7,13 @@ class PuppetLint::CheckPlugin
       return ftokens
    end
 
+   def get_tokens(tokens, token)
+      ftokens=tokens.find_all do |hash|
+         (hash.type.to_s == 'NAME' || hash.type.to_s == 'VARIABLE' || hash.type.to_s == 'SSTRING' || hash.type.to_s == 'STRING') and hash.value.downcase.include? token
+      end
+      return ftokens
+   end
+
    def get_comments(tokens)
       ftokens=tokens.find_all do |hash|
          (hash.type.to_s == 'COMMENT' || hash.type.to_s == 'MLCOMMENT' || hash.type.to_s == 'SLASH_COMMENT') 

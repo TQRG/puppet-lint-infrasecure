@@ -22,7 +22,6 @@ describe 'invalid_ip_addr_binding' do
     ) { 
         rabbitmq_user { $user:
             admin    => true,
-            password => $password,
             provider => 'rabbitmqctl',
             require  => Class['::rabbitmq']
         }
