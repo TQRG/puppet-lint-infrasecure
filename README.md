@@ -1,6 +1,6 @@
 # puppet-lint-security-iac
 
-Hey you! 👋  Do you have experience in Puppet or similar tools (e.g., Ansible, Terraform, Chef) and appreciate security? Then, we would very much appreciate your colaboration. 😊 ▶️ [https://puppet-study.herokuapp.com/](https://puppet-study.herokuapp.com/)
+Hey you! 👋  Do you have experience in Puppet or similar tools (e.g., Ansible, Terraform, Chef) and appreciate security? Then, we would very much appreciate your colaboration. 😊 ▶️   [https://puppet-study.herokuapp.com/](https://puppet-study.herokuapp.com/)
 
 ⚠️  This is still work in progress! 
 
