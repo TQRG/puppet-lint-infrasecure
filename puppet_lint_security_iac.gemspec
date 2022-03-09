@@ -12,13 +12,14 @@ Gem::Specification.new do |spec|
   ]
   
   spec.test_files  = Dir['spec/**/*']
-  spec.summary = 'A puppet-lint plugin to check for security code smells in IaC.'
+  spec.summary = 'Puppet-lint plugins to check for security code smells in IaC.'
   spec.description = <<-EOF
     Checks puppet manifests for potential security issues.
   EOF
 
   spec.add_dependency             'puppet-lint', '~> 2.4', '>= 2.4.2'  
   spec.add_dependency             'dotenv', '~> 2.7', '>= 2.7.6'
+  spec.add_dependency             'strong_password', '~> 0.0.10'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-its', '~> 1.0'
   spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
