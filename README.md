@@ -12,6 +12,7 @@ This linter identifies 8 security vulnerabilities in Puppet scripts.
 - Invalid IP Address Binding
 - Use of HTTP without TLS
 - Usage of Weak Crypto Algorithms (e.g., sha1 and md5)
+- Usage of Weak Passwords ([strong_password](https://github.com/bdmac/strong_password) gem to validate if weak)
 - Suspicious Comments
 - Homograph Attacks (e.g., [Apple](https://www.xudongz.com/blog/2017/idn-phishing/))
 
