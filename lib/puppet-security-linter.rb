@@ -2,6 +2,7 @@ require 'puppet-lint'
 require 'puppet-lint/linter'
 require 'puppet-lint/config'
 require 'dotenv/load'
+require 'json'
 
 Dotenv.load('.env')
 

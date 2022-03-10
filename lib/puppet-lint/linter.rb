@@ -1,5 +1,17 @@
 class PuppetLint::CheckPlugin
 
+   def get_dependency(token, version)
+      dep = token.gsub("_version", "")
+      path = "./dependencies/"
+      path << dep
+      path << ".json"
+      puts path
+      cves = JSON.parse(File.read(path))
+      if !cves[version].nil?
+         return cves[version]
+      end
+   end
+
    def get_string_tokens(tokens, token)
       ftokens=tokens.find_all do |hash|
          (hash.type.to_s == 'SSTRING' || hash.type.to_s == 'STRING') and hash.value.downcase.include? token
@@ -56,6 +68,13 @@ class PuppetLint::CheckPlugin
    def filter_tokens_per_value(tokens, token)
       ftokens=tokens.find_all do |hash|
          (hash.type.to_s == 'NAME' || hash.type.to_s == 'SSTRING' || hash.type.to_s == 'STRING') and !hash.value.downcase.include? token
+      end
+      return ftokens
+   end
+
+   def remove_whitespace(tokens)
+      ftokens=tokens.find_all do |hash|
+         !(hash.type.to_s == 'NEWLINE' || hash.type.to_s == 'WHITESPACE' || hash.type.to_s == 'INDENT' || hash.type.to_s == 'COMMENT' || hash.type.to_s == 'MLCOMMENT' || hash.type.to_s == 'SLASH_COMMENT')
       end
       return ftokens
    end

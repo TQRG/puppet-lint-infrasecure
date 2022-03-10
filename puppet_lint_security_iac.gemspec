@@ -20,10 +20,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency             'puppet-lint', '~> 2.4', '>= 2.4.2'  
   spec.add_dependency             'dotenv', '~> 2.7', '>= 2.7.6'
   spec.add_dependency             'strong_password', '~> 0.0.10'
+  spec.add_dependency  'json', '~> 2.6', '>= 2.6.1'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-its', '~> 1.0'
   spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
   spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.3'
   spec.add_development_dependency 'coveralls', '~> 0.7'
-  
 end
