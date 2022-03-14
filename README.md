@@ -1,10 +1,6 @@
 # puppet-lint-security-iac
 
-Hey you! 👋  Do you have experience in Puppet or similar tools (e.g., Ansible, Terraform, Chef) and appreciate security? Then, we would very much appreciate your colaboration. 😊 ▶️   [https://puppet-study.herokuapp.com/](https://puppet-study.herokuapp.com/)
-
-⚠️  This is still work in progress! 
-
-This linter identifies 9 security vulnerabilities in Puppet scripts. 
+Security plug-ins:
 
 - Admin By Default Credentials
 - Empty Passwords
@@ -14,6 +10,7 @@ This linter identifies 9 security vulnerabilities in Puppet scripts.
 - Usage of Weak Crypto Algorithms (e.g., sha1 and md5)
 - Usage of Weak Passwords ([strong_password](https://github.com/bdmac/strong_password) gem to validate if weak)
 - Suspicious Comments
+- Malicious Dependencies (for 33 software packages available through [forge](https://forge.puppet.com/))
 - Homograph Attacks (e.g., [Apple](https://www.xudongz.com/blog/2017/idn-phishing/))
 
 ### Configure gem

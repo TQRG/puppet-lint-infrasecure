@@ -8,6 +8,9 @@ PuppetLint.new_check(:malicious_dependency) do
       ftokens = get_dependencies(tokens)
       ftokens.each do |token|
          version = token[:token].next_code_token.value.downcase
+         if version.include? "v"
+            version = version.gsub("v", "")
+         end
          dependency = token[:dependency]
          cves = get_malicious_cves(dependency, version)
          if !cves.nil?

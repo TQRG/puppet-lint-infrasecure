@@ -17,3 +17,4 @@ validation
 .ruby-gemset
 .ruby-version
 experiments
+run.sh

@@ -16,7 +16,10 @@ describe 'malicious_dependency' do
                     target             => '/path/to/pg_hba.conf',
                     postgresql_version => '9.4',
                   }
-
+                  
+                class { 'test':
+                    redhat_openstack_version => '10'
+                }
 
                 class { 'postgresql::globals':
                     manage_package_repo => true,
