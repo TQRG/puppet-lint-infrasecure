@@ -1,4 +1,8 @@
-name: 'puppet-lint-iac-action'
-description: 'GitHub Action for puppet-lint'
+name: 'puppet-lint-action-iac'
+description: 'GitHub Action for puppet-lint-iac'
 runs:
-  using: 'ubuntu-latest'
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'share-2'
+  color: 'orange'
