@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'hardcode_secret' do
-    let(:msg) { 'SECURITY:::HARD_CODED_SECRET_V1:::Do not hard code secrets. This may help an attacker to attack the system. You can use hiera to avoid this issue.@username=apmirror@' }
+    let(:msg) { '[SECURITY] Hard Coded Secret (line=10, col=9) | Do not keep secrets on your scripts as for $username = apmirror in 10. Use kms/heira/vault instead.' }
     
     context 'with fix disabled' do
         context 'code contains hard coded usernames' do
@@ -20,6 +20,12 @@ describe 'hardcode_secret' do
         package { $packages:
             ensure => present,
         }
+
+        $cert_generation_class      = '::puppet::puppetserver::generate_cert'
+
+        $pwd = 'unset'
+        $pwd = $cert
+        $pwd = 'pe-puppet'
           
         user { $username:
             ensure     => $user_present,

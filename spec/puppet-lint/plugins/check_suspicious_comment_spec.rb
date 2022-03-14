@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'suspicious_comment' do
-    let(:msg) { 'SECURITY:::SUSPICOUS_COMMENTS:::Do not expose sensitive information@# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538392@' }
+    let(:msg) { '[SECURITY] Suspicious Comment (line=8, col=9) | Avoid doing comments containing info about a defect, missing functionality or weakness of the system.' }
     
     context 'with fix disabled' do
         context 'code with suspicious comment' do
@@ -28,7 +28,7 @@ describe 'suspicious_comment' do
                 source => 'puppet:///modules/ldap/scripts/ssh-key-ldap-lookup.py',
             }
         }
-        # For security purposes, sshd will only run ssh-key-ldap-lookup as the 'ssh-key-ldap-lookup' user.
+        # sshd will only run ssh-key-ldap-lookup as the 'ssh-key-ldap-lookup' user.
         user { 'ssh-key-ldap-lookup':
             ensure => present,
             system => true,
@@ -43,7 +43,7 @@ describe 'suspicious_comment' do
             end
   
             it 'should create a warning' do
-                expect(problems).to contain_warning(msg).on_line(8).in_column(5)
+                expect(problems).to contain_warning(msg).on_line(8).in_column(9)
             end
         end
     end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'admin_by_default' do
-    let(:msg) { 'SECURITY:::ADMIN_BY_DEFAULT:::Do not make default user as admin. This violates the secure by design principle.@user=admin@' }
+    let(:msg) { '[SECURITY] Admin by default (line=6, col=24) | Do not make user/password as admin as for $user in line 6. This can be easily exploited.' }
     
     context 'with fix disabled' do
         context 'user configuration as admin' do
@@ -11,6 +11,7 @@ describe 'admin_by_default' do
         $auth_server = '127.0.0.1',
         $tenant      = 'openstack',
         $user        = 'admin'
+
     ) {
         include swift::deps
           
@@ -21,13 +22,12 @@ describe 'admin_by_default' do
         }
     }     
     " }
-  
             it 'should detect one problem' do
                 expect(problems).to have(1).problem
             end
   
             it 'should create a warning for svnwc user config' do
-                expect(problems).to contain_warning(msg).on_line(6).in_column(9)
+                expect(problems).to contain_warning(msg).on_line(6).in_column(24)
             end
         end
     end

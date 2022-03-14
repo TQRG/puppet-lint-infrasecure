@@ -1,16 +1,25 @@
+require 'puppet-security-linter'
+
 PuppetLint.new_check(:invalid_ip_addr_binding) do
-    def check
-      tokens.each do |indi_token|
-         token_valu = indi_token.value ### this gives each token
-         token_valu = token_valu.downcase
-         token_type = indi_token.type.to_s
-         if (token_valu.include? "0.0.0.0") && (!token_type.eql? "COMMENT")
-            notify :warning, {
-               message: 'SECURITY:::BINDING_TO_ALL:::Do not bind to 0.0.0.0. This may cause a DDOS attack. Restrict your available IPs.',
-               line: indi_token.line,
-               column: indi_token.column,
-               token: token_valu
+   
+   IP_ADDR_BIN_REGEX = /^((http(s)?:\/\/)?0.0.0.0(:\d{1,5})?)$/ 
+   
+   def check
+      ftokens = get_tokens(tokens,"0.0.0.0")
+      ftokens.each do |token|
+         token_value = token.value.downcase
+         token_type = token.type.to_s
+         if ["EQUALS", "FARROW"].include? token.prev_code_token.type.to_s 
+            prev_token = token.prev_code_token
+            left_side = prev_token.prev_code_token
+            if token_value =~ IP_ADDR_BIN_REGEX and ["VARIABLE", "NAME"].include? left_side.type.to_s
+               notify :warning, {
+               message: "[SECURITY] Invalid IP Address Binding (line=#{token.line}, col=#{token.column}) | Don\'t bind your host to #{token_value}. This config allows connections from every possible network. Restrict your available IPs.",
+               line:    token.line,
+               column:  token.column,
+               token:   token_value
             }
+            end
          end
       end
    end

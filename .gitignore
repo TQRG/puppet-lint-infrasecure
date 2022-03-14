@@ -12,3 +12,9 @@ pkg/*
 .env
 spec/dummy/tmp/*
 spec/dummy/log/*.log
+validation
+
+.ruby-gemset
+.ruby-version
+experiments
+run.sh

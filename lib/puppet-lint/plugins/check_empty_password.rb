@@ -1,32 +1,23 @@
+require 'puppet-security-linter'
+
 PuppetLint.new_check(:empty_password) do
-    def check
-      tokens.each do |indi_token|
-         nxt_token     = indi_token.next_code_token # next token which is not a white space
-         if (!nxt_token.nil?) && (!indi_token.nil?)
-            token_type   = indi_token.type.to_s ### this gives type for current token
 
-            token_line   = indi_token.line ### this gives type for current token
-            nxt_tok_line = nxt_token.line
-
-            nxt_nxt_token =  nxt_token.next_code_token # get the next next token to get key value pair
-
-            if  (!nxt_nxt_token.nil?)
-               nxt_nxt_line = nxt_nxt_token.line
-               if (token_type.eql? 'NAME') || (token_type.eql? 'VARIABLE') || (token_type.eql? 'SSTRING')
-                  # puts "Token type: #{token_type}"
-                  if (token_line==nxt_nxt_line)
-                     token_valu  = indi_token.value.downcase
-                     nxt_nxt_val = nxt_nxt_token.value.downcase
-                     # puts "KEY,PAIR----->#{token_valu}, #{nxt_nxt_val}"
-                     if (((token_valu.include? "pwd") || (token_valu.include? "password") || (token_valu.include? "pass")) && (((nxt_nxt_val.length <=0) || (nxt_nxt_val.eql?' ')) && (! nxt_nxt_val.include? "$")))
-                        notify :warning, {
-                          message: 'SECURITY:::EMPTY_PASSWORD:::Do not keep password field empty. This may help an attacker to attack. You can use hiera to avoid this issue.@'+token_valu+'='+nxt_nxt_val+'@',
-                          line:    indi_token.line,
-                          column:  indi_token.column,
-                          token:   token_valu
-                        }
-                     end
-                  end
+   def check
+      ftokens = get_string_tokens(tokens,'')
+      ftokens.each do |token|
+         token_value = token.value.downcase
+         token_type = token.type.to_s
+         if ["EQUALS", "FARROW"].include? token.prev_code_token.type.to_s 
+            prev_token = token.prev_code_token
+            left_side = prev_token.prev_code_token
+            if left_side.value.downcase =~ PASSWORD and ["VARIABLE", "NAME"].include? left_side.type.to_s
+               if token_value == ''
+                  notify :warning, {
+               message: "[SECURITY] Empty Password (line=#{token.line}, col=#{token.column}) | Do not keep the password field empty as for $#{prev_token.prev_code_token.value.downcase} in line #{token.line}. Use kms/heira/vault instead.",
+               line:    token.line,
+               column:  token.column,
+               token:   token_value
+            }
                end
             end
          end

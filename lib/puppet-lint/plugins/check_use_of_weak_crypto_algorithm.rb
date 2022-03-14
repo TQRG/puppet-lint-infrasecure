@@ -1,16 +1,23 @@
+require 'puppet-security-linter'
+
 PuppetLint.new_check(:use_of_weak_crypto_algorithm) do
+
+   POOR_CRYPTO= /^(sha1|md5)/
+
    def check
-      tokens.each do |indi_token|
-         token_valu = indi_token.value ### this gives each token
-         token_valu = token_valu.downcase
-         token_type = indi_token.type.to_s
-         if ((token_valu.include? "md5") || (token_valu.include? "sha1")) && (!token_type.eql? "COMMENT")
+      tokens.each do |token|
+         token_value = token.value.downcase
+         token_type = token.type.to_s
+         if !token.next_token.nil?
+            next_token_type = token.next_token.type.to_s
+         end
+         if (token_value =~ POOR_CRYPTO) && (next_token_type.eql? "LPAREN")
             notify :warning, {
-               message: 'SECURITY:::MD5:::Do not use MD5 or SHA1, as they have security weakness. Use SHA-512.@' + token_valu+'@',
-               line: indi_token.line,
-               column: indi_token.column,
-               token: token_valu
-            }
+               message: "[SECURITY] Weak Crypto Algorithm (line=#{token.line}, col=#{token.column}) | Do not use #{token_value}, as they have security weakness. Use SHA-512 instead.",
+               line: token.line,
+               column: token.column,
+               token: token_value
+         }
          end
       end
    end  

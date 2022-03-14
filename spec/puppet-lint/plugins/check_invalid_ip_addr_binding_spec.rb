@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'invalid_ip_addr_binding' do
-    let(:msg) { 'SECURITY:::BINDING_TO_ALL:::Do not bind to 0.0.0.0. This may cause a DDOS attack. Restrict your available IPs.' }
+    let(:msg) {'[SECURITY] Invalid IP Address Binding (line=4, col=30) | Don\'t bind your host to 0.0.0.0. This config allows connections from every possible network. Restrict your available IPs.' }
     
     context 'with fix disabled' do
         context 'invalid ip adress binding configuration' do
@@ -22,10 +22,15 @@ describe 'invalid_ip_addr_binding' do
     ) { 
         rabbitmq_user { $user:
             admin    => true,
-            password => $password,
             provider => 'rabbitmqctl',
             require  => Class['::rabbitmq']
         }
+
+        if $bind_ip == '0.0.0.0' {
+            $bind_ip_real = '127.0.0.1'
+          } else {
+            $bind_ip_real = $bind_ip
+          }        
     }
     " }
   
