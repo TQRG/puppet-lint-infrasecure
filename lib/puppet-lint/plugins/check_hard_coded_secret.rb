@@ -13,13 +13,13 @@ PuppetLint.new_check(:hardcode_secret) do
       ftokens = filter_tokens(tokens)
       ftokens.each do |token|
          token_value = token.value.downcase
-         token_type = token.type.to_s
+         token_type = token.type
          next_token = token.next_code_token
          # accepts <VARIABLE> <EQUALS> secret OR <NAME> <FARROW> secret, checks if <VARIABLE> | <NAME> satisfy SECRETS but not satisfy NON_SECRETS 
-         if ["VARIABLE", "NAME"].include? token_type and ["EQUALS", "FARROW"].include? next_token.type.to_s and token_value =~ SECRETS and !(token_value =~ NON_SECRETS)
-            right_side_type = next_token.next_code_token.type.to_s
+         if [:VARIABLE, :NAME].include? token_type and [:EQUALS, :FARROW].include? next_token.type and token_value =~ SECRETS and !(token_value =~ NON_SECRETS)
+            right_side_type = next_token.next_code_token.type
             right_side_value = next_token.next_code_token.value.downcase
-            if ["STRING", "SSTRING"].include? right_side_type and right_side_value.length > 1 and !invalid_values.include? right_side_value and !(right_side_value =~ /::|\/|\.|\\/ ) and !user_default.include? right_side_value
+            if [:STRING, :SSTRING].include? right_side_type and right_side_value.length > 1 and !invalid_values.include? right_side_value and !(right_side_value =~ /::|\/|\.|\\/ ) and !user_default.include? right_side_value
                notify :warning, {
                   message: "[SECURITY] Hard Coded Secret (line=#{token.line}, col=#{token.column}) | Do not keep secrets on your scripts as for $#{token_value} = #{right_side_value} in #{token.line}. Use kms/heira/vault instead.",
                   line:    token.line,
