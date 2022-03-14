@@ -40,12 +40,3 @@ jobs:
                   bundler-cache: true
             - run: bundle install
             - run: bundle exec rake
-
-    jenkins:
-        name: test
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v2
-            - uses: danielfobooss/puppet-jenkins@master
-            - run: bundle install
-            - run: bundle exec rake
