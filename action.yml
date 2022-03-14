@@ -1,0 +1,4 @@
+name: 'puppet-lint-iac-action'
+description: 'GitHub Action for puppet-lint'
+runs:
+  using: 'ubuntu-latest'
