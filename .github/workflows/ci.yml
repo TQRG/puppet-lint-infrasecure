@@ -42,3 +42,5 @@ jobs:
                   bundler-cache: true
             - run: bundle install
             - run: bundle exec rake
+        steps:
+            uses: actions/checkout@v2
