@@ -2,8 +2,6 @@ require 'puppet-security-linter'
 
 PuppetLint.new_check(:empty_password) do
 
-   PASSWORD = /pass(word|_|$)|pwd/
-
    def check
       ftokens = get_string_tokens(tokens,'')
       ftokens.each do |token|

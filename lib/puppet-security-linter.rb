@@ -2,6 +2,7 @@ require 'puppet-lint'
 require 'puppet-lint/linter'
 require 'puppet-lint/config'
 require 'dotenv/load'
+require 'json'
 
 Dotenv.load('.env')
 
@@ -21,6 +22,7 @@ module PuppetSecurityLinter
     def self.configure
       yield(configuration)
     end
+
 end
 
 config = PuppetSecurityLinter::Configuration.new
@@ -33,3 +35,4 @@ end
 
 PuppetSecurityLinter.configuration = config
 
+PASSWORD = /pass(word|_|$)|pwd/

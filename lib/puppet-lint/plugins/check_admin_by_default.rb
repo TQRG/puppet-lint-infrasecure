@@ -2,9 +2,9 @@ require 'puppet-security-linter'
 
 PuppetLint.new_check(:admin_by_default) do
 
-    CREDENTIALS = /user|usr|pass(word|_|$)|pwd/
+   CREDENTIALS = /user|usr|pass(word|_|$)|pwd/
 
-    def check
+   def check
         ftokens = get_tokens(tokens,'admin')
         ftokens.each do |token|
          token_value = token.value.downcase
