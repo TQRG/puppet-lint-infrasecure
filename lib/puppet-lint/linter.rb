@@ -1,15 +1,61 @@
 class PuppetLint::CheckPlugin
 
-   def get_dependency(token, version)
-      dep = token.gsub("_version", "")
-      path = "./dependencies/"
-      path << dep
+   DEPENDENCIES = /(activemq|apt|cassandra|docker|elasticsearch|jenkins|jira|kafka|kubernetes|mongodb|gerrit|gitlab|grafana|haproxy|hiera|nagios_core|puppet_agent|puppet_db|wget|zabbix|mysql|nginx|nodejs|ntp|openstack|openvpn|postgresql|rabbitmq|redis|ruby|sqlite|systemd|terraform|tomcat|vault|yum)/
+   DEPENDENCIES_VER = /(activemq|apt|cassandra|docker|elasticsearch|jenkins|jira|kafka|kubernetes|mongodb|gerrit|gitlab|grafana|haproxy|hiera|nagios_core|puppet_agent|puppet_db|wget|zabbix|mysql|nginx|nodejs|ntp|openstack|openvpn|postgresql|rabbitmq|redis|ruby|sqlite|systemd|terraform|tomcat|vault|yum)_version/
+
+   def get_malicious_cves(dependency, version)
+      path = File.dirname(File.realpath(__FILE__))
+      path << "/dependencies/"
+      path << dependency
       path << ".json"
-      puts path
       cves = JSON.parse(File.read(path))
       if !cves[version].nil?
          return cves[version]
       end
+   end
+
+   def get_dependencies(tokens)
+      is_resource = false
+      ftokens = []
+      dependency = ''
+      tokens.each do |token|
+
+         is_next_brace = (not token.next_code_token.nil? and token.next_code_token.type.to_s == 'LBRACE')
+         is_prev_brace = (not token.prev_code_token.nil? and token.prev_code_token.type.to_s == 'LBRACE')
+
+         if (token.value.downcase[DEPENDENCIES] and token.type.to_s == 'NAME' and is_next_brace) or (token.value.downcase[DEPENDENCIES] and token.type.to_s == 'SSTRING' and is_prev_brace)
+            is_resource = true
+            dependency = token.value.downcase[DEPENDENCIES]
+         end 
+
+         if is_resource and token.type.to_s == 'RBRACE'
+            is_resource = false
+         end
+
+         
+         if not is_resource and not token.next_code_token.nil? 
+            if token.value.downcase[DEPENDENCIES_VER]
+               dependency = token.value.downcase[DEPENDENCIES]
+               variable_name = "#{dependency}_version"
+               if token.value.downcase == variable_name and ["EQUALS", "FARROW"].include? token.next_code_token.type.to_s
+                  ftokens += [{"token": token.next_code_token, "dependency": dependency}]
+               end
+            end
+         end
+         
+         is_assign = (not token.prev_code_token.nil? and not token.next_code_token.nil?)
+         is_version = (is_assign and token.prev_code_token.value.downcase =~ /version/)
+         
+         if is_resource and is_version and ["EQUALS", "FARROW"].include? token.type.to_s and !["VARIABLE", "NAME"].include? token.next_code_token.type.to_s
+            if !token.prev_code_token.value.downcase[DEPENDENCIES].eql? dependency and token.prev_code_token.value.downcase[DEPENDENCIES]
+               ftokens += [{"token": token, "dependency": token.prev_code_token.value.downcase[DEPENDENCIES]}]
+            else
+               ftokens += [{"token": token, "dependency": dependency}]
+            end
+         end
+
+      end
+      return ftokens
    end
 
    def get_string_tokens(tokens, token)

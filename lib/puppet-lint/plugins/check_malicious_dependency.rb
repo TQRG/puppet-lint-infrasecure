@@ -1,25 +1,21 @@
 require 'puppet-security-linter'
 
 PuppetLint.new_check(:malicious_dependency) do
-
-   DEPENDENCIES = /(postgresql|docker|mongodb|mysql|nginx|nodejs|ntp|rabbitmq|redis|ruby)_version/
+   
+   DEPENDENCIES = /(activemq|apt|cassandra|docker|elasticsearch|jenkins|jira|kafka|kubernetes|mongodb|gerrit|gitlab|grafana|haproxy|hiera|nagios_core|puppet_agent|puppet_db|wget|zabbix|mysql|nginx|nodejs|ntp|openstack|openvpn|postgresql|rabbitmq|redis|ruby|sqlite|systemd|terraform|tomcat|vault|yum)/
 
    def check
-      ftokens = remove_whitespace(tokens)
+      ftokens = get_dependencies(tokens)
       ftokens.each do |token|
-         next if token.prev_code_token.nil? or token.next_code_token.nil?             
-         variable_name = token.prev_code_token.value.downcase
-         if ["EQUALS", "FARROW"].include? token.type.to_s and DEPENDENCIES =~ variable_name
-            version = token.next_code_token.value.downcase
-            cves = get_dependency(variable_name, version)
-         end
-
+         version = token[:token].next_code_token.value.downcase
+         dependency = token[:dependency]
+         cves = get_malicious_cves(dependency, version)
          if !cves.nil?
             notify :warning, {
-               message: "[SECURITY] Malicious Dependency (line=#{token.line}, col=#{token.column}) | This software is using a third-party library/software affected by known CVEs (#{cves.join(', ')}).",
-               line: token.line,
-               column: token.column,
-               token: variable_name
+               message: "[SECURITY] Malicious Dependency (line=#{token[:token].line}, col=#{token[:token].column}) | This software is using a third-party library/software (#{dependency} v#{version}) affected by known CVEs (#{cves.join(', ')}).",
+               line: token[:token].line,
+               column: token[:token].column,
+               token: token[:token].prev_code_token.value.downcase
             }
          end
       end

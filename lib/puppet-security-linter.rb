@@ -22,6 +22,7 @@ module PuppetSecurityLinter
     def self.configure
       yield(configuration)
     end
+
 end
 
 config = PuppetSecurityLinter::Configuration.new
@@ -34,3 +35,4 @@ end
 
 PuppetSecurityLinter.configuration = config
 
+PASSWORD = /pass(word|_|$)|pwd/

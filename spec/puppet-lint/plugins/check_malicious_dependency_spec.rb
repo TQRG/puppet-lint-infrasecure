@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'malicious_dependency' do
-    let(:msg) {'[SECURITY] Malicious Dependency (line=10, col=40) | This software is using a third-party library/software affected by known CVEs (CVE-2017-12172, CVE-2017-15098, CVE-2017-7484, CVE-2017-7485, CVE-2017-7486, CVE-2017-7546, CVE-2017-7547, CVE-2017-7548, CVE-2016-0766, CVE-2016-0773, CVE-2016-5423, CVE-2016-5424).'}
+    let(:msg) {'[SECURITY] Malicious Dependency (line=10, col=40) | This software is using a third-party library/software (postgresql v9.4) affected by known CVEs (CVE-2017-12172, CVE-2017-15098, CVE-2017-7484, CVE-2017-7485, CVE-2017-7486, CVE-2017-7546, CVE-2017-7547, CVE-2017-7548, CVE-2016-0766, CVE-2016-0773, CVE-2016-5423, CVE-2016-5424).'}
     
     context 'with fix disabled' do
         context 'software uses malicious dependencies' do
@@ -22,11 +22,10 @@ describe 'malicious_dependency' do
                     manage_package_repo => true,
                     version             => '9.2',
                 }
-
             " }
   
             it 'should detect a single problem' do
-                expect(problems).to have(1).problem
+                expect(problems).to have(2).problem
             end
   
             it 'should create a warning' do

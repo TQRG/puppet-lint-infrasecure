@@ -2,7 +2,7 @@ require 'puppet-security-linter'
 
 PuppetLint.new_check(:suspicious_comment) do
 
-   SUSPICIOUS = /hack|fixme|ticket|bug|secur|debug|defect|weak/
+   SUSPICIOUS = /hack|fixme|ticket|bug|hack|checkme|secur|debug|defect|weak/
 
    def check
       ftokens = get_comments(tokens)
