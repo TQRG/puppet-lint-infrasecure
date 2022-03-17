@@ -50,8 +50,9 @@ jobs:
         run: bundle install
       - name: Run static validations
         run: bundle exec rake --trace
-      - name: build/install gem
+      - name: build gem
         run: gem build puppet_lint_security_iac.gemspec
+      - name: install gem
         run: gem install ./puppet-lint-security-iac-1.0.0.gem
 
 
