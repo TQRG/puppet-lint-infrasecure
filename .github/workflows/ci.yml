@@ -49,7 +49,7 @@ jobs:
       - name: bundle install
         run: bundle install
       - name: Run static validations
-        run: bundle exec rake
+        run: bundle exec rake --trace
 
   unit:
     defaults:
