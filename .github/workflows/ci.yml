@@ -1,37 +1,92 @@
-name: CI
+---
+name: Puppet
 
-on: [push]
+on:
+  workflow_call:
+    inputs:
+      rubocop:
+        description: Whether to run Rubocop
+        default: true
+        required: false
+        type: boolean
+      timeout_minutes:
+        description: The maximum time (in minutes) for a job to take.
+        default: 45
+        required: false
+        type: number
+      working-directory:
+        description: The working directory where all jobs should be executed. Used for modules in subdirectories like a monorepo or a control repository.
+        default: '.'
+        required: false
+        type: string
+      cache-version:
+        description: The cache version to pass to setup-ruby
+        default: '0'
+        required: false
+        type: string
 
 jobs:
-  lint:
-    name: RuboCop
+  setup_matrix:
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    name: Static validations
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout_minutes }}
+    outputs:
+      puppet_unit_test_matrix: ${{ steps.get-outputs.outputs.puppet_unit_test_matrix }}
+      github_action_test_matrix: ${{ steps.get-outputs.outputs.github_action_test_matrix }}
+    env:
+      BUNDLE_WITHOUT: development:system_tests:release
     steps:
       - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: '3.0'
           bundler-cache: true
-      - run: bundle exec rake
+          cache-version: ${{ inputs.cache-version }}
+          working-directory: ${{ inputs.working-directory }}
+      - name: Run static validations
+        run: bundle exec rake validate lint check
+      - name: Run rake rubocop
+        run: bundle exec rake rubocop
+        if: ${{ inputs.rubocop }}
+      - name: Setup Test Matrix
+        id: get-outputs
+        run: bundle exec metadata2gha --use-fqdn
 
-  spec:
+  unit:
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    needs: setup_matrix
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout_minutes }}
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-latest", "windows-latest"]
-        ruby:
-          - "2.4"
-          - "2.5"
-          - "2.7"
-    needs: lint
-    name: RSpec - ${{ matrix.os }} - Ruby ${{ matrix.ruby }}
-    runs-on: ${{ matrix.os }}
+        include: ${{fromJson(needs.setup_matrix.outputs.puppet_unit_test_matrix)}}
     env:
-      COVERAGE: yes
+      BUNDLE_WITHOUT: development:system_tests:release
+      PUPPET_GEM_VERSION: "~> ${{ matrix.puppet }}.0"
+    name: ${{ matrix.puppet }} (Ruby ${{ matrix.ruby }})
     steps:
       - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - run: bundle exec rake
+          cache-version: ${{ inputs.cache-version }}
+          working-directory: ${{ inputs.working-directory }}
+      - name: Run tests
+        run: bundle exec rake parallel_spec
+
+  tests:
+    needs: unit
+    runs-on: ubuntu-latest
+    name: Test suite
+    steps:
+      - run: echo Test suite completed
+        working-directory: '.'
