@@ -48,7 +48,6 @@ jobs:
           working-directory: ${{ inputs.working-directory }}
       - name: bundle install
         run: bundle install
-      - name
       - name: Run static validations
         run: bundle exec rake --trace
       - name: build/install gem
