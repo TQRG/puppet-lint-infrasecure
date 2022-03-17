@@ -1,5 +1,17 @@
-require 'rspec/core/rake_task'
+begin
+  require 'puppetlabs_spec_helper/rake_tasks'
+rescue LoadError
+  # Allowed to fail, only needed in test
+end
 
-RSpec::Core::RakeTask.new(:spec)
+begin
+  require 'beaker-rspec/rake_task'
+rescue LoadError
+  # Allowed to fail, only needed in acceptance
+end
 
-task :default => :spec
+begin
+  require 'puppet_blacksmith/rake_tasks'
+rescue LoadError
+  # Allowed to fail, only needed in release
+end
