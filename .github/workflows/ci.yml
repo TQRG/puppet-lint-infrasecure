@@ -46,14 +46,10 @@ jobs:
           bundler-cache: true
           cache-version: ${{ inputs.cache-version }}
           working-directory: ${{ inputs.working-directory }}
+      - name: bundle install
+        run: bundle install
       - name: Run static validations
-        run: bundle exec rake validate lint check
-      - name: Run rake rubocop
-        run: bundle exec rake rubocop
-        if: ${{ inputs.rubocop }}
-      - name: Setup Test Matrix
-        id: get-outputs
-        run: bundle exec metadata2gha --use-fqdn
+        run: bundle exec rake
 
   unit:
     defaults:
