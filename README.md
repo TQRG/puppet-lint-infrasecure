@@ -1,4 +1,4 @@
-# puppet-lint-security-iac
+# puppet-lint-infrasecure
 
 Security plug-ins:
 
@@ -29,7 +29,7 @@ WHITELIST=~/path/to/whitelist
 
 ### Create whitelist file
 
-A whitelist by default is provided. You can build your own if you want by following this structure:
+A whitelist by default is provided. But you can build your own if you want by following the structure below:
 
 ```
 <link1>
@@ -42,28 +42,4 @@ e.g.,
 http://apt.postgresql.org/.*
 http://packages.vmware.com
 http://.*.jenkins-ci.org/.*
-```
-
-### Install Gems
-
-```
-bundle install
-```
-
-### Run Tests
-
-```
-bundle exec rake
-```
-
-### Build Gem
-
-```
-gem build puppet_lint_security_iac.gemspec
-```
-
-### Installation 
-
-```
-gem install ./puppet-lint-security-iac-1.0.0.gem
 ```

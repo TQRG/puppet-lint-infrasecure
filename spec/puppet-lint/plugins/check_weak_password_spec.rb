@@ -22,7 +22,7 @@ describe 'weak_password' do
             end
   
             it 'should create a warning' do
-                expect(problems).to contain_warning(msg).on_line(9).in_column(18)
+                expect(problems).to contain_warning(msg).on_line(9).in_column(20)
             end
         end
     end

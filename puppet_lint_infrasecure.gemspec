@@ -1,9 +1,14 @@
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'puppet-lint-infrasecure/version'
+
+
 Gem::Specification.new do |spec|
-  spec.name = 'puppet-lint-security-iac'
-  spec.version = '1.0.0'
+  spec.name = 'puppet-lint-infrasecure'
+  spec.version = InfraSecure::VERSION
   spec.author = 'Sofia Reis'
   spec.email = 'sofiareis1994@gmail.com'
-  spec.homepage = 'https://github.com/TQRG/puppet-lint-security-iac'
+  spec.homepage = 'https://github.com/TQRG/puppet-lint-infrasecure'
   spec.license = 'MIT'
   spec.files = Dir[
     'README.md', 
@@ -12,7 +17,7 @@ Gem::Specification.new do |spec|
   ]
   
   spec.test_files  = Dir['spec/**/*']
-  spec.summary = 'Puppet-lint plugins to check for security code smells in IaC.'
+  spec.summary = 'Puppet-lint plugins to detect security code smells in puppet scripts.'
   spec.description = <<-EOF
     Checks puppet manifests for potential security issues.
   EOF
@@ -20,7 +25,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency             'puppet-lint', '~> 2.4', '>= 2.4.2'  
   spec.add_dependency             'dotenv', '~> 2.7', '>= 2.7.6'
   spec.add_dependency             'strong_password', '~> 0.0.10'
-  spec.add_dependency  'json', '~> 2.6', '>= 2.6.1'
+  spec.add_dependency             'json', '~> 2.6', '>= 2.6.1'
+  spec.add_dependency             'yaml', '~> 0.2.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-its', '~> 1.0'
   spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'

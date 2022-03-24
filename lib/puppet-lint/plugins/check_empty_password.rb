@@ -1,4 +1,4 @@
-require 'puppet-security-linter'
+require 'puppet-lint-infrasecure'
 
 PuppetLint.new_check(:empty_password) do
 
@@ -9,13 +9,14 @@ PuppetLint.new_check(:empty_password) do
          if [:EQUALS, :FARROW].include? token.prev_code_token.type 
             prev_token = token.prev_code_token
             left_side = prev_token.prev_code_token
-            if left_side.value.downcase =~ PASSWORD and [:VARIABLE, :NAME].include? left_side.type
+            if left_side.value.downcase =~ Rules.password and [:VARIABLE, :NAME].include? left_side.type
                if token_value == ''
                   notify :warning, {
                message: "[SECURITY] Empty Password (line=#{token.line}, col=#{token.column}) | Do not keep the password field empty as for $#{prev_token.prev_code_token.value.downcase} in line #{token.line}. Use kms/heira/vault instead.",
                line:    token.line,
                column:  token.column,
-               token:   token_value
+               token:   token_value,
+               cwe: 'CWE-258'
             }
                end
             end

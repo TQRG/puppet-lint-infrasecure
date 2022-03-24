@@ -74,7 +74,6 @@ describe 'use_http_without_tls' do
         mirrorlist     => 'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates'
 
 
-        $resource = 'http://cbs.centos.org/repos/nfv7-opendaylight-4-testing/$basearch/os/'
         $fedora = 'http://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
         $fedora_2 = 'http://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
 
@@ -86,7 +85,6 @@ describe 'use_http_without_tls' do
         $backports_location = 'http://hello.com'
 
         $pwd = root
-        $website = 'http://apt.postgresql.org/pub/repos/apt/'
         changes => 'set exist/xquery/builtin-modules/module[#attribute/uri = \"http://exist-db.org/xquery/xmldiff\"]/#attribute/class org.exist.xquery.modules.xmldiff.XmlDiffModule'
     " }
   

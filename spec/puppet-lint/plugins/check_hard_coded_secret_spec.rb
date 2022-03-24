@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'hardcode_secret' do
-    let(:msg) { '[SECURITY] Hard Coded Secret (line=10, col=9) | Do not keep secrets on your scripts as for $username = apmirror in 10. Use kms/heira/vault instead.' }
+    let(:msg) { '[SECURITY] Hard Coded Secret (line=10, col=27) | Do not keep secrets on your scripts as for $username = apmirror in 10. Use kms/heira/vault instead.' }
     
     context 'with fix disabled' do
         context 'code contains hard coded usernames' do
@@ -46,7 +46,7 @@ describe 'hardcode_secret' do
             end
   
             it 'should create a warning for username hard coded config' do
-                expect(problems).to contain_warning(msg).on_line(10).in_column(9)
+                expect(problems).to contain_warning(msg).on_line(10).in_column(27)
             end
         end
     end

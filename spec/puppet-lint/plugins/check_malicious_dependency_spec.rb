@@ -18,7 +18,7 @@ describe 'malicious_dependency' do
                   }
                   
                 class { 'test':
-                    redhat_openstack_version => '10'
+                    openstack_version => '10'
                 }
 
                 class { 'postgresql::globals':
@@ -28,7 +28,7 @@ describe 'malicious_dependency' do
             " }
   
             it 'should detect a single problem' do
-                expect(problems).to have(2).problem
+                expect(problems).to have(3).problem
             end
   
             it 'should create a warning' do

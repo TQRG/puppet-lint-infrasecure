@@ -1,9 +1,6 @@
-require 'puppet-security-linter'
+require 'puppet-lint-infrasecure'
 
 PuppetLint.new_check(:malicious_dependency) do
-   
-   DEPENDENCIES = /(activemq|apt|cassandra|docker|elasticsearch|jenkins|jira|kafka|kubernetes|mongodb|gerrit|gitlab|grafana|haproxy|hiera|nagios_core|puppet_agent|puppet_db|wget|zabbix|mysql|nginx|nodejs|ntp|openstack|openvpn|postgresql|rabbitmq|redis|ruby|sqlite|systemd|terraform|tomcat|vault|yum)/
-
    def check
       ftokens = get_dependencies(tokens)
       ftokens.each do |token|
