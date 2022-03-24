@@ -15,12 +15,18 @@ Gem::Specification.new do |spec|
     'lib/**/*',
     'spec/**/*'  
   ]
-  
+  spec.metadata    = { "source_code_uri" => spec.homepage }
+
   spec.test_files  = Dir['spec/**/*']
   spec.summary = 'Puppet-lint plugins to detect security code smells in puppet scripts.'
   spec.description = <<-EOF
-    Checks puppet manifests for potential security issues.
+    Checks puppet manifests for potential security issues: admin_by_default,
+    cyrillic_homograph_attack, empty_password, hardcoded_secret, invalid_ip_addr_binding,
+    malicious_dependency, suspicious_comment, use_http_without_tls, use_of_weak_crypto_algorithm
+    and weak_password.
   EOF
+
+  spec.required_ruby_version = '>= 3.0.2'
 
   spec.add_dependency             'puppet-lint', '~> 2.4', '>= 2.4.2'  
   spec.add_dependency             'dotenv', '~> 2.7', '>= 2.7.6'
