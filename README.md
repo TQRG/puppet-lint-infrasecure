@@ -49,33 +49,14 @@ use_of_weak_crypto_algorithm
 weak_password
 ```
 
+A default `whitelist` is available for `use_http_without_tls`. You can set your own personalized whitelist.
 
-#### Reporting bugs
-
-Any bugs related with our plug-ins, please create an issue in our [issue tracker](https://github.com/TQRG/puppet-lint-infrasecure).
-
-#### Contributions
-
-Many other security anti-patterns may be out there, therefore feel free to contribute through a [pull request](https://github.com/TQRG/puppet-lint-infrasecure/pulls). 
-
-### Configure gem
-
-Create .env file.
-
-```
-touch .env
-```
-
-Add whitelist path to .env file.
-
+1. Create `.env` file.
+2. Add the whitelist path to the `.env` file.
 ```
 WHITELIST=~/path/to/whitelist
 ```
-
-### Create whitelist file
-
-A whitelist by default is provided. But you can build your own if you want by following the structure below:
-
+3. Whitelist Schema
 ```
 <link1>
 <link2>
@@ -88,3 +69,13 @@ http://apt.postgresql.org/.*
 http://packages.vmware.com
 http://.*.jenkins-ci.org/.*
 ```
+
+
+#### Reporting bugs
+
+Any bugs related with our plug-ins, please create an issue in our [issue tracker](https://github.com/TQRG/puppet-lint-infrasecure).
+
+#### Contributions
+
+Many other security anti-patterns may be out there, therefore feel free to contribute through a [pull request](https://github.com/TQRG/puppet-lint-infrasecure/pulls). 
+
