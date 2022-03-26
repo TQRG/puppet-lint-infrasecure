@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
     and weak_password.
   EOF
 
-  spec.required_ruby_version = '>= 3.0.1'
+  spec.required_ruby_version = '>= 3.0.3'
 
   spec.add_dependency             'puppet-lint', '~> 2.4', '>= 2.4.2'  
   spec.add_dependency             'dotenv', '~> 2.7', '>= 2.7.6'
