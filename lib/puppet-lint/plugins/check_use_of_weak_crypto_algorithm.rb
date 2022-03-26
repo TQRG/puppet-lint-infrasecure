@@ -12,7 +12,8 @@ PuppetLint.new_check(:use_of_weak_crypto_algorithm) do
                message: "[SECURITY] Weak Crypto Algorithm (line=#{token.line}, col=#{token.column}) | Do not use #{token_value}, as they have security weakness. Use SHA-512 instead.",
                line: token.line,
                column: token.column,
-               token: token_value
+               token: token_value,
+               cwe: 'CWE-326'
          }
          end
       end

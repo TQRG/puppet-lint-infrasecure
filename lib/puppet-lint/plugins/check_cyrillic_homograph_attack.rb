@@ -10,7 +10,8 @@ PuppetLint.new_check(:cyrillic_homograph_attack) do
                message: "[SECURITY] Homograph Attack (line=#{token.line}, col=#{token.column}). This link (#{token_value}) has a cyrillic char. These are not rendered by browsers and are sometimes used for phishing attacks.",
                line: token.line,
                column: token.column,
-               token: token_value
+               token: token_value,
+               cwe: 'CWE-1007'
             }
          end
       end

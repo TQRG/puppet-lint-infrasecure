@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'hardcode_secret' do
+describe 'hardcoded_secret' do
     let(:msg) { '[SECURITY] Hard Coded Secret (line=10, col=27) | Do not keep secrets on your scripts as for $username = apmirror in 10. Use kms/heira/vault instead.' }
     
     context 'with fix disabled' do
