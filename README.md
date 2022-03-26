@@ -18,9 +18,9 @@ puppet-lint --json <file>
 
 Usage documentation is available here.
 
-| CWE-ID | anti-pattern | example |
-|:-----:|------------|------------|
-|`CWE-250`| Admin by default credentials <br /> `admin_by_default` | `$user = 'admin'` |
+|<div style="width:80px">CWE-ID</div>|<div style="width:300px">Anti-Pattern</div>| <div style="width:300px">Example</div> |
+|:-----|------------|------------|
+|`CWE-250`| Admin by default credentials <br /> `admin_by_default` | `$user = 'admin'` <br />  `$pwd = 'admin'` |
 |`CWE-798`| Hard-coded secrets (password, user, keys) <br /> `hardcoded_secret` | `$username = 'apmirror'` |
 |`CWE-258`| Invalid IP address binding <br />`invalid_ip_addr_binding` | `$bind_host = '0.0.0.0'` |
 |`CWE-319`| Use of HTTP without TLS (whitelist config) <br /> `use_http_without_tls` | `$auth_url = 'http://127.0.0.1:35357/v2.0'` |
@@ -28,7 +28,7 @@ Usage documentation is available here.
 |`CWE-521`| Usage of weak passwords (uses [strong_password](https://github.com/bdmac/strong_password)) <br /> `weak_password` | `$pwd = '12345'` |
 |`CWE-546`| Suspicious comments <br /> `suspicious_comment` | `# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538392` |
 |`CWE-829`| Malicious dependencies (beta) <br /> `malicious_dependency` | `$postgresql_version = '8.4'` |
-|`CWE-1007`| Homograph Attacks (e.g., [Apple](https://www.xudongz.com/blog/2017/idn-phishing/)) <br /> `cyrillic_homograph_attack`| `$source = 'https://downloads.аpаche.org/activemq/5.17.0/apache-activemq-5.17.0-bin.zip '` |
+|`CWE-1007`| Homograph Attacks (e.g., [Apple](https://www.xudongz.com/blog/2017/idn-phishing/)) <br /> `cyrillic_homograph_attack`| `$source = 'https://downloads.аpаche.org/activemq/5.17.0/apache-activemq-5.17.0-bin.zip'` |
 
 List security plug-ins:
 ```
