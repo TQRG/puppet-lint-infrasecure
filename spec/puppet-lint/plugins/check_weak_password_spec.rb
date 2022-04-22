@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'weak_password' do
-    let(:msg) { '[SECURITY] Weak Password (line=9, col=20) | Passwords should be strong to be hard to uncover by hackers (weak_password=12345678). In any case, you should use kms/heira/vault to store secrets instead.' }
+    let(:msg) { '[SECURITY][CWE-521] Weak Password (line=9, col=20) | Passwords should be strong to be hard to uncover by hackers (weak_password=12345678, entropy=10). You should be using a password with at least 18 bits of entropy. In any case, secrets should be stored in services like kms/heira/vault not in plain text.' }
     
     context 'with fix disabled' do
         context 'code using weak password' do
