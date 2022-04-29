@@ -26,6 +26,8 @@ describe 'use_of_weak_crypto_algorithm' do
         $package_options        = undef,
     ) {
         $home_sha = sha1($_catalina_home)
+        $ssl_chipers = 'HIGH:!aNULL:!MD5'
+        $path = '/usr/local/go/src/crypto/sha1/sha1block_s390x'
     }
     " }
   

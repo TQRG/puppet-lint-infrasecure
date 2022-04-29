@@ -32,11 +32,18 @@ describe 'hardcode_secret' do
             managehome => true,
             require    => [ Group[$groupname], Group[$apbackup::username] ],
         }
+
+        if has_key($userdata, 'env'):
+            $aws_admin_username = downcase($::operationgsysten)
+        
+        $user = pick($user, 'postgres')
+        user => root
+        password => postgresql_password('moodle', 'moodle'),
     }
     " }
   
             it 'should detect one problem' do
-                expect(problems).to have(1).problem
+                expect(problems).to have(3).problem
             end
   
             it 'should create a warning for username hard coded config' do

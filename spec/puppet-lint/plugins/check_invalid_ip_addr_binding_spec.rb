@@ -26,6 +26,8 @@ describe 'invalid_ip_addr_binding' do
             provider => 'rabbitmqctl',
             require  => Class['::rabbitmq']
         }
+
+        description => 'Open up postgresql for access to sense from 0.0.0.0/0'
     }
     " }
   

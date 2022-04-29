@@ -15,6 +15,9 @@ describe 'use_http_without_tls' do
     $discovery_proxy = undef
     $strict_reconfig_check = false
     $auto_compaction_retention = undef
+
+    cmd => 'npm config set registry http://registry.npmjs.org'
+
     " }
   
             it 'should detect a single problem' do

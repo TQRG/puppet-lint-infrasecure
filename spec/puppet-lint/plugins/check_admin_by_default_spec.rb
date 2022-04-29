@@ -19,6 +19,7 @@ describe 'admin_by_default' do
             content => template('swift/swift_keystone_test.erb'),
             tag     => 'swift-file',
         }
+        $stream_processor_rest_api_username = '${admin.username}'
     }     
     " }
   
