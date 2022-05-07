@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'cyrillic_homograph_attack' do
-    let(:msg) {'[SECURITY] Homograph Attack (line=2, col=35). This link (https://www.аpple.com/phish) has a cyrillic char. These are not rendered by browsers and are sometimes used for phishing attacks.' }
+    let(:msg) {'[SECURITY][CWE-1007] Homograph Attack (line=2, col=35). This link (https://www.аpple.com/phish) has a cyrillic char. These chars are not rendered by browsers and are sometimes used for phishing attacks. It can also result in typosquatting attacks.' }
     
     context 'with fix disabled' do
         context 'homograph attack using cyrillic chars not rendered by normal browsers' do

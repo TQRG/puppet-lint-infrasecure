@@ -2,25 +2,27 @@ require 'puppet-lint-infrasecure'
 
 PuppetLint.new_check(:use_http_without_tls) do
    def check
-      resources = ['apt::source', '::apt::source', 'wget::fetch', 'yumrepo', 'yum::', 'aptly::mirror', 'util::system_package', 'yum::managed_yumrepo']
-      ptokens = filter_resources(tokens, resources)
-      keywords = ['backport', 'key', 'download', 'uri', 'mirror']
-      ctokens = filter_variables(ptokens, keywords)
       if Config.regex.whitelist
-         wtokens = filter_whitelist(ctokens)
+         wtokens = filter_whitelist(tokens)
       else
-         wtokens = ptokens
+         wtokens = tokens
       end
       wtokens.each do |token|
-         token_value = token.value.downcase
-         if (token_value =~ Rules.http)
-            notify :warning, {
-               message: "[SECURITY] HTTP without TLS (line=#{token.line}, col=#{token.column}) | Do not use HTTP without TLS as in #{token_value}. This may cause a MITM attack.",
+         next if token.next_code_token.nil?
+         next if token.prev_code_token.nil?   
+         # accepts (<VARIABLE>|<NAME>) (<EQUALS>|<FARROW>) (<STRING>|<SSTRING>)
+         if [:EQUALS, :FARROW].include? token.prev_code_token.type and [:STRING, :SSTRING].include? token.type
+            right_side_value = token.value.downcase
+         
+            if (right_side_value =~ Rules.http)
+               notify :warning, {
+               message: "[SECURITY][CWE-319] HTTP without TLS (line=#{token.line}, col=#{token.column}) | Do not use HTTP without TLS as in #{token.value}. This may cause a MITM attack.",
                line: token.line,
                column: token.column,
-               token: token_value,
+               token: token.value,
                cwe: 'CWE-319'
-            }
+               }
+            end
          end
       end
    end

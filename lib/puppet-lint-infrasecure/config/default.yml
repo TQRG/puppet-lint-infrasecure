@@ -1,0 +1,21 @@
+user-default:
+  - pe-puppetpe-webserver
+  - pe-puppetdb
+  - pe-postgres
+  - pe-console-services
+  - pe-orchestration-services
+  - pe-ace-server
+  - pe-bolt-server
+
+invalid-values:
+  - undefined
+  - unset
+  - www-data
+  - wwwrun
+  - www
+  - no
+  - yes
+  - []
+  - undef
+  - true
+  - false

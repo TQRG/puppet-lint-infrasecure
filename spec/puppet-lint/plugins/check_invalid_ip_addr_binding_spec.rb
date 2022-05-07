@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'invalid_ip_addr_binding' do
-    let(:msg) {'[SECURITY] Invalid IP Address Binding (line=4, col=30) | Don\'t bind your host to 0.0.0.0. This config allows connections from every possible network. Restrict your available IPs.' }
+    let(:msg) {'[SECURITY][CWE-284] Invalid IP Address Binding (line=4, col=30) | Don\'t bind your host to 0.0.0.0. This config allows connections from every possible network. Restrict your available IPs.' }
     
     context 'with fix disabled' do
         context 'invalid ip adress binding configuration' do

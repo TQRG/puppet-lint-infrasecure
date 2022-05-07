@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'suspicious_comment' do
-    let(:msg) { '[SECURITY] Suspicious Comment (line=8, col=9) | Avoid doing comments containing info about a defect, missing functionality or weakness of the system.' }
+    let(:msg) { '[SECURITY][CWE-546] Suspicious Comment (line=8, col=9) | Avoid doing comments containing info about a defect, missing functionality or weakness of the system.' }
     
     context 'with fix disabled' do
         context 'code with suspicious comment' do

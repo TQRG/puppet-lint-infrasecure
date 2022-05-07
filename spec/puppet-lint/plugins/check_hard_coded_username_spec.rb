@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe 'hardcoded_secret' do
-    let(:msg) { '[SECURITY][CWE-798] Hard Coded Secret (line=10, col=36) | Do not keep secrets on your scripts as for $username_password = apmirror in line 10. Store secrets in a vault instead.' }
+describe 'hardcoded_secret_username' do
+    let(:msg) { '[SECURITY][CWE-798] Hard Coded Username (line=10, col=27) | Do not keep secrets on your scripts as for $username = apmirror in line 10. Store secrets in a vault instead.' }
     
     context 'with fix disabled' do
         context 'code contains hard coded usernames' do
@@ -14,7 +14,7 @@ describe 'hardcoded_secret' do
         $groups         = [],
         $service_ensure = 'running',
         $cert          = '/bin/bash',
-        $username_password       = 'apmirror',
+        $username       = 'apmirror',
         $packages       = ['libwww-perl', 'libnet-dns-perl'],
     ){
         package { $packages:
@@ -23,7 +23,7 @@ describe 'hardcoded_secret' do
 
         $cert_generation_class      = '::puppet::puppetserver::generate_cert'
 
-        $pwd = undef
+        $private_ssl_key = 'D868325'
         $pwd = $cert
         $pwd = 'pe-puppet'
           
@@ -47,7 +47,7 @@ describe 'hardcoded_secret' do
             end
   
             it 'should create a warning for username hard coded config' do
-                expect(problems).to contain_warning(msg).on_line(10).in_column(36)
+                expect(problems).to contain_warning(msg).on_line(10).in_column(27)
             end
         end
     end

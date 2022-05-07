@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'use_of_weak_crypto_algorithm' do
-    let(:msg) { '[SECURITY] Weak Crypto Algorithm (line=22, col=21) | Do not use sha1, as they have security weakness. Use SHA-512 instead.' }
+    let(:msg) { '[SECURITY][CWE-326] Weak Crypto Algorithm (line=22, col=21) | Do not use sha1, as they have security weakness. Use SHA-512 instead.' }
     
     context 'with fix disabled' do
         context 'code using unsecure algorithms' do

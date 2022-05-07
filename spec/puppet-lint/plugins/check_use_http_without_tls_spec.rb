@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'use_http_without_tls' do
-    let(:msg) { '[SECURITY] HTTP without TLS (line=2, col=23) | Do not use HTTP without TLS as in http://localhost:2021. This may cause a MITM attack.' }
+    let(:msg) { '[SECURITY][CWE-319] HTTP without TLS (line=2, col=23) | Do not use HTTP without TLS as in http://localhost:2021. This may cause a MITM attack.' }
   
     context 'with fix disabled' do
         context 'configuration using http' do
@@ -89,7 +89,7 @@ describe 'use_http_without_tls' do
     " }
   
             it 'should detect a single problem' do
-                expect(problems).to have(1).problem
+                expect(problems).to have(13).problem
             end
   
             it 'should create a warning' do

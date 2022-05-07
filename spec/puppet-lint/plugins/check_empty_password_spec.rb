@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'empty_password' do
-    let(:msg) { '[SECURITY] Empty Password (line=12, col=32) | Do not keep the password field empty as for $password in line 12. Use kms/heira/vault instead.' }
+    let(:msg) { '[SECURITY][CWE-258] Empty Password (line=12, col=32) | Do not keep the password field empty as for $password in line 12. Use a stronger password.' }
     
     context 'with fix disabled' do
         context 'code configuration using empty passwords' do

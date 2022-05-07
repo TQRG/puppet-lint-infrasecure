@@ -12,11 +12,11 @@ PuppetLint.new_check(:malicious_dependency) do
          cves = get_malicious_cves(dependency, version)
          if !cves.nil?
             notify :warning, {
-               message: "[SECURITY] Malicious Dependency (line=#{token[:token].line}, col=#{token[:token].column}) | This software is using a third-party library/software (#{dependency} v#{version}) affected by known CVEs (#{cves.join(', ')}).",
+               message: "[SECURITY][CWE-829] Malicious Dependency (line=#{token[:token].line}, col=#{token[:token].column}) | This software is using a third-party library/software (#{dependency} v#{version}) affected by known CVEs (#{cves.join(', ')}).",
                line: token[:token].line,
                column: token[:token].column,
                token: token[:token].prev_code_token.value.downcase,
-               cwe: "CWE-829"
+               cwe: 'CWE-829'
             }
          end
       end

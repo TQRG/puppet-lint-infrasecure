@@ -118,6 +118,38 @@ class PuppetLint::CheckPlugin
       return ftokens
    end
 
+   def filter_credentials(tokens)
+      credentials = {}  
+      tokens.each do |token|         
+         next if token.next_code_token.nil?
+         next if token.prev_code_token.nil?
+         # accepts (<VARIABLE>|<NAME>) =~ SECRET (<EQUALS>|<FARROW>) !(<STRING>|<SSTRING>|<NAME>) =~ (NONSECRET AND PLACHOLDER)
+         if [:VARIABLE, :NAME].include? token.prev_code_token.type and [:EQUALS, :FARROW].include? token.type and token.prev_code_token.value.downcase =~ Rules.secret and !(token.next_code_token.value.downcase =~ Rules.nonsecret) and !(token.next_code_token.value.downcase =~ Rules.placeholder)
+            # check if username
+            left_side_value = token.prev_code_token.value.downcase
+            is_username = left_side_value[Rules.username]
+            is_password = left_side_value[Rules.password]
+            if !is_username.nil?
+               puts is_username
+               context = left_side_value.gsub(is_username, '')
+               if context.length > 0
+                  puts "CONTEXT", context
+               end
+               credentials.merge!(context => {:username => left_side_value }) if context.length > 0
+            end
+            if !is_password.nil?
+               puts is_password
+               context = left_side_value.gsub(is_password, '')
+               if context.length > 0
+                  puts "CONTEXT", context
+               end
+               credentials.merge!(context => {:password => left_side_value }) if context.length > 0
+            end
+         end
+      end
+      puts credentials
+   end
+
    def filter_variables(tokens, keywords)
       line = -1
       kw_regex = Regexp.new keywords.join("|")
